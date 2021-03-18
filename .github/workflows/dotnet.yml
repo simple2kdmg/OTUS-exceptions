@@ -18,4 +18,4 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Build
-      run: dotnet build ./../../ToDoText/ToDoText.sln
+      run: dotnet build ./ToDoText/ToDoText.sln
