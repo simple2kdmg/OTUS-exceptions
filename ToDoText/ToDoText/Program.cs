@@ -5,28 +5,26 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
+
+
 namespace ToDoText
 {
+    using System;
+
     class Program
     {
         const string _fileName = "todo.txt";
 
         static void AddTask(string name, DateTime date)
         {
-            var task = new ToDoTask { Name = name, Date = date };
+            var task = new ToDoTask(name, date);
             File.AppendAllLines(_fileName, new[] { $"{task.Date:dd/MM/yy}\t{task.Name}" });
         }
 
         static ToDoTask[] GetTasks()
         {
             var todoTxtLines = File.ReadAllLines(_fileName);
-            return todoTxtLines.Select(l =>
-            {
-                var split = l.Split('\t');
-                var date = DateTime.ParseExact(split[0], "dd/MM/yy", CultureInfo.InvariantCulture);
-                var name = split[1];
-                return new ToDoTask { Name = name, Date = date };
-            }).ToArray();
+            return todoTxtLines.Select(ToDoTask.Parse).ToArray();
         }
 
         static void ListTodayTasks()
